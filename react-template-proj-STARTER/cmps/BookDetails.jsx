@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { bookService } from '../services/book.service.js' 
+import { bookService } from '../services/book.service.js'
+import { LongTxt } from './LongTxt.jsx'
+
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
@@ -83,7 +85,7 @@ export function BookDetails() {
       {book.listPrice?.isOnSale && <span className="sale-badge">On Sale</span>}
     </p>
 
-    {book.description && <p className="desc">{book.description}</p>}
+    {book.description && <LongTxt txt={book.description} length={100} />}
 
     <button onClick={() => navigate('/book')}>Back</button>
   </section>)
