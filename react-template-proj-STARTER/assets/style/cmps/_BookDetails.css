@@ -1,0 +1,14 @@
+.book-details .badge {
+  margin-inline-start: .4rem;
+  padding: .12rem .5rem;
+  border-radius: .4rem;
+  background: #eee;
+}
+
+.book-details .price-red {
+  color: #c62828;
+}
+
+.book-details .price-green {
+  color: #2e7d32;
+}

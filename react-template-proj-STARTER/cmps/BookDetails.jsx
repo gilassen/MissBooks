@@ -23,6 +23,28 @@ export function BookDetails() {
       .finally(() => setIsLoading(false))
   }
 
+  function readingLevel(pageCount = 0) {
+    if (pageCount > 500) return 'Serious Reading'
+    if (pageCount > 200) return 'Descent Reading'
+    if (pageCount < 100) return 'Light Reading'
+    return ''
+  }
+
+  function publishTag(year) {
+    if (!year) return ''
+    const now = new Date()
+    const currYear = now.getFullYear()
+    if (currYear - year > 10) return 'Vintage'
+    if (currYear - year === 0) return 'New'
+    return ''
+  }
+
+  function priceClass(amount = 0) {
+    if (amount > 150) return 'price-red'
+    if (amount < 20) return 'price-green'
+    return ''
+  }
+
   if (isLoading) return <p>Loading...</p>
 
   if (error || !book) {
@@ -35,10 +57,34 @@ export function BookDetails() {
   }
 
   return (
-    <section className="book-details">
-      <h2>{book.title}</h2>
-      <p>Price: {book.listPrice?.amount} {book.listPrice?.currencyCode}</p>
-      <button onClick={() => navigate('/book')}>Back</button>
-    </section>
-  )
+  <section className="book-details">
+    {book.thumbnail && <img src={book.thumbnail} alt={book.title} />}
+
+    <h2>{book.title}</h2>
+    {book.subtitle && <h3>{book.subtitle}</h3>}
+    {book.authors?.length ? <p>By: {book.authors.join(', ')}</p> : null}
+
+    <p>
+      Pages: {book.pageCount}
+      {readingLevel(book.pageCount) && (
+        <span className="badge"> {readingLevel(book.pageCount)}</span>
+      )}
+    </p>
+
+    <p>
+      Published: {book.publishedDate}
+      {publishTag(book.publishedDate) && (
+        <span className="badge"> {publishTag(book.publishedDate)}</span>
+      )}
+    </p>
+
+    <p className={priceClass(book.listPrice?.amount)}>
+      Price: {book.listPrice?.amount} {book.listPrice?.currencyCode}
+      {book.listPrice?.isOnSale && <span className="sale-badge">On Sale</span>}
+    </p>
+
+    {book.description && <p className="desc">{book.description}</p>}
+
+    <button onClick={() => navigate('/book')}>Back</button>
+  </section>)
 }
