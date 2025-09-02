@@ -29,44 +29,53 @@ export function BookFilter({ filterBy, onSetFilterBy }) {
 
   return (
     <section className="book-filter">
-      <form onSubmit={onSubmit}>
-        <label htmlFor="txt">Title</label>
-        <input
-          id="txt" name="txt" type="text"
-          value={txt} onChange={handleChange}
-          placeholder="Search by title"
-        />
-
-        <label htmlFor="minPrice">Min price</label>
-        <input
-          id="minPrice" name="minPrice" type="number" min={0}
-          value={minPrice} onChange={handleChange}
-        />
-
-        <label htmlFor="maxPrice">Max price</label>
-        <input
-          id="maxPrice" name="maxPrice" type="number" min={0}
-          value={maxPrice} onChange={handleChange}
-        />
-
-        <label className="chk">
+      {/* הוספת המחלקה filters + RTL כדי ש-BookFilter.css יעבוד */}
+      <form className="filters" dir="rtl" onSubmit={onSubmit}>
+        <div className="field">
+          <label htmlFor="txt" className="label">Title</label>
           <input
-            type="checkbox"
-            name="onSale"
-            checked={onSale}
-            onChange={handleChange}
+            id="txt" name="txt" type="text"
+            value={txt} onChange={handleChange}
+            placeholder="Search by title"
           />
-          On Sale only
-        </label>
+        </div>
 
-        <label htmlFor="publishedAfter">Published After</label>
-        <input
-          id="publishedAfter" name="publishedAfter" type="number"
-          value={publishedAfter} onChange={handleChange}
-          placeholder="e.g. 2015"
-        />
+        <div className="field">
+          <label htmlFor="minPrice" className="label">Min price</label>
+          <input
+            id="minPrice" name="minPrice" type="number" min={0}
+            value={minPrice} onChange={handleChange}
+          />
+        </div>
 
-        <button>Filter</button>
+        <div className="field">
+          <label htmlFor="maxPrice" className="label">Max price</label>
+          <input
+            id="maxPrice" name="maxPrice" type="number" min={0}
+            value={maxPrice} onChange={handleChange}
+          />
+        </div>
+
+        {/* צ'קבוקס—עטיפה ייעודית כדי שיישר לגובה השדות */}
+        <div className="field checkbox-row">
+          <input
+            id="onSale" type="checkbox" name="onSale"
+            checked={onSale} onChange={handleChange}
+          />
+          <label htmlFor="onSale" className="label">On Sale only</label>
+        </div>
+
+        <div className="field">
+          <label htmlFor="publishedAfter" className="label">Published After</label>
+          <input
+            id="publishedAfter" name="publishedAfter" type="number"
+            value={publishedAfter} onChange={handleChange}
+            placeholder="e.g. 2015"
+          />
+        </div>
+
+        {/* כפתור עם המחלקה מה-CSS */}
+        <button className="btn-filter">Filter</button>
       </form>
     </section>
   )
