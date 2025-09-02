@@ -1,1 +1,29 @@
-.about { max-width: 920px; margin: 0 auto; padding: 1rem; line-height: 1.7; }
+.about {
+  max-width: 920px;
+  margin: 2rem auto;            
+  padding: 2rem;              
+  line-height: 1.8;
+  font-family: "Rubik", Arial, sans-serif; 
+  font-size: 1.05rem;
+  color: #2d3748;             
+  background: #ffffff;        
+  border-radius: 12px;        
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.about:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.about h1, .about h2 {
+  font-weight: 700;
+  color: #2f855a;    
+  margin-bottom: 1rem;
+}
+
+.about p {
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
