@@ -1,7 +1,6 @@
-// cmps/BookEdit.jsx
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+const { useState } = React
 import { bookService } from '../services/book.service.js'
+const { useNavigate } = ReactRouterDOM
 
 export function BookEdit() {
   const navigate = useNavigate()

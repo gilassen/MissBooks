@@ -4,4 +4,9 @@
 
 /* Components */
 @import './cmps/_AppHeader.css';
-@import './cmps/_BookDetails.css';
+@import './cmps/_BookList.css';
+@import './cmps/_BookFilter.css';
+@import './cmps/_BookDetails.css'; 
+@import './cmps/_BookEdit.css';
+@import './cmps/_HomePage.css';     
+@import './cmps/_About.css';

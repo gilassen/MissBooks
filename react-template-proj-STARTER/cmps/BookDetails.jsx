@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Link, useParams, useNavigate } from 'react-router-dom'
+const { useState, useEffect } = React
 import { bookService } from '../services/book.service.js'
 import { LongTxt } from './LongTxt.jsx'
-
+const { Link, useParams, useNavigate } = ReactRouterDOM
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
@@ -64,7 +63,7 @@ export function BookDetails() {
 
     <h2>{book.title}</h2>
     {book.subtitle && <h3>{book.subtitle}</h3>}
-    {book.authors?.length ? <p>By: {book.authors.join(', ')}</p> : null}
+    {book.authors && book.authors.length ? <p>By: {book.authors.join(', ')}</p> : null}
 
     <p>
       Pages: {book.pageCount}
@@ -80,13 +79,18 @@ export function BookDetails() {
       )}
     </p>
 
-    <p className={priceClass(book.listPrice?.amount)}>
-      Price: {book.listPrice?.amount} {book.listPrice?.currencyCode}
-      {book.listPrice?.isOnSale && <span className="sale-badge">On Sale</span>}
+    <p className={priceClass(book.listPrice && book.listPrice.amount)}>
+        Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}
+        {book.listPrice && book.listPrice.isOnSale && <span className="sale-badge">On Sale</span>}
     </p>
 
     {book.description && <LongTxt txt={book.description} length={100} />}
 
-    <button onClick={() => navigate('/book')}>Back</button>
-  </section>)
+    <div className="details-actions">
+      <button onClick={() => navigate('/book')}>Back</button>
+      <button><Link to={`/book/${book.prevBookId}`}>Prev</Link></button>
+      <button><Link to={`/book/${book.nextBookId}`}>Next</Link></button>
+    </div>
+  </section>
+)
 }

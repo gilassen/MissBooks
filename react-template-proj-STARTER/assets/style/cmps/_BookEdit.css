@@ -1,0 +1,14 @@
+.book-edit {
+  max-width: 560px; margin: 0 auto; background: #fff;
+  border: 1px solid rgba(0,0,0,.06); border-radius: 12px; padding: 1rem;
+}
+.book-edit form { display: grid; gap: .75rem; }
+.book-edit input {
+  width: 100%; padding: .55rem .7rem; border: 1px solid rgba(0,0,0,.12); border-radius: 8px;
+}
+.book-edit input:focus {
+  border-color: var(--clr1,#606b5b); box-shadow: 0 0 0 3px rgba(96,107,91,.12); outline: none;
+}
+.book-edit .actions { display: flex; gap: .5rem; margin-top: .25rem; }
+.book-edit button { padding: .55rem .9rem; border-radius: 8px; background: var(--clr2bg,#e9cede); }
+.book-edit button:hover { background: var(--clr2,#78636e); color: #fff; }

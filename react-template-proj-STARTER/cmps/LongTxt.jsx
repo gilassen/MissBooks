@@ -1,4 +1,4 @@
-import { useState } from 'react'
+const { useState } = React
 
 export function LongTxt({ txt = '', length = 100 }) {
   const [isLong, setIsLong] = useState(false)

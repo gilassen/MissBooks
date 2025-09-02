@@ -6,7 +6,7 @@ export function BookPreview({book}) {
     return (
         <article className="book-preview">
             <h3>{title}</h3>
-            <p>Price: {listPrice?.amount} {listPrice?.currencyCode}</p>
+            <p>Price: {listPrice && listPrice.amount} {listPrice && listPrice.currencyCode}</p>
         </article>
     )
 }

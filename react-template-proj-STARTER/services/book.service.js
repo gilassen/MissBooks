@@ -1,4 +1,3 @@
-// services/book.service.js
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
 
@@ -12,8 +11,27 @@ export const bookService = {
   save,
   getEmptyBook,
   getDefaultFilter,
+  getNextBookId,
+  getPrevBookId,
 }
 
+
+
+function getNextBookId(bookId) {
+  return storageService.query(BOOK_KEY).then(books => {
+    const idx = books.findIndex(book => book.id === bookId)
+    const nextIdx = (idx + 1) % books.length
+    return books[nextIdx].id
+  })
+}
+
+function getPrevBookId(bookId) {
+  return storageService.query(BOOK_KEY).then(books => {
+    const idx = books.findIndex(book => book.id === bookId)
+    const prevIdx = (idx - 1 + books.length) % books.length
+    return books[prevIdx].id
+  })
+}
 
 function query(filterBy = {}) {
   return storageService.query(BOOK_KEY).then(books => {
@@ -25,7 +43,20 @@ function query(filterBy = {}) {
     }
 
     if (filterBy.minPrice) {
-      res = res.filter(book => (book.listPrice?.amount || 0) >= filterBy.minPrice)
+      res = res.filter(book => ((book.listPrice && book.listPrice.amount) || 0) >= filterBy.minPrice)
+    }
+
+    if (filterBy.maxPrice) {
+      res = res.filter(book => ((book.listPrice && book.listPrice.amount) || 0) <= filterBy.maxPrice)
+    }
+
+    if (filterBy.onSale) {
+      res = res.filter(book => book.listPrice && !!book.listPrice.isOnSale)
+
+    }
+
+    if (filterBy.publishedAfter) {
+      res = res.filter(book => (book.publishedDate || 0) >= +filterBy.publishedAfter)
     }
 
     return res
@@ -33,7 +64,20 @@ function query(filterBy = {}) {
 }
 
 function get(bookId) {
-  return storageService.get(BOOK_KEY, bookId)
+  return storageService.query(BOOK_KEY).then(books => {
+    const idx = books.findIndex(book => book.id === bookId)
+    if (idx === -1) return Promise.reject('Book not found')
+
+    const book = books[idx]
+    const prevBook = books[(idx - 1 + books.length) % books.length]
+    const nextBook = books[(idx + 1) % books.length]
+
+    return {
+      ...book,
+      prevBookId: prevBook.id,
+      nextBookId: nextBook.id,
+    }
+  })
 }
 
 function remove(bookId) {
@@ -52,8 +96,14 @@ function getEmptyBook(title = '', amount = 0, currencyCode = 'EUR', isOnSale = f
   }
 }
 
-function getDefaultFilter(filterBy = { txt: '', minPrice: 0 }) {
-  return { txt: filterBy.txt, minPrice: filterBy.minPrice }
+function getDefaultFilter(filterBy = { txt: '', minPrice: 0, maxPrice: 0, onSale: false, publishedAfter: '' }) {
+  return {
+    txt: filterBy.txt,
+    minPrice: filterBy.minPrice,
+    maxPrice: filterBy.maxPrice,
+    onSale: filterBy.onSale,
+    publishedAfter: filterBy.publishedAfter,
+  }
 }
 
 function _createBooks() {

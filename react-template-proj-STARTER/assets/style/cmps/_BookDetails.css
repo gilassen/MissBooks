@@ -23,3 +23,18 @@
   cursor: pointer;
   font: inherit;
 }
+
+.sale-badge {
+  margin-inline-start: .4rem;
+  padding: .12rem .5rem;
+  border-radius: .4rem;
+  background: var(--clr2bg);
+  color: white;
+  font-size: .9rem;
+}
+
+.details-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}

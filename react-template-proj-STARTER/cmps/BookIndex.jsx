@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { bookService } from '../services/book.service.js'
 import { BookFilter } from './BookFilter.jsx'   
-import { BookList } from './BookList.jsx'       
+import { BookList } from './BookList.jsx'
+const { useNavigate } = ReactRouterDOM
+const { useState, useEffect } = React
+
 
 export function BookIndex() {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   const [books, setBooks] = useState([])
   const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
 
