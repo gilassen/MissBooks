@@ -1,6 +1,6 @@
 const { useState, useEffect } = React
 import { bookService } from '../services/book.service.js'
-import { LongTxt } from './LongTxt.jsx'
+import { LongTxt } from '../cmps/LongTxt.jsx'
 const { Link, useParams, useNavigate } = ReactRouterDOM
 
 export function BookDetails() {
