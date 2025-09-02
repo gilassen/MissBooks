@@ -1,0 +1,21 @@
+.add-book-container{
+  display: flex;
+  justify-content: center; 
+  margin-top: 1rem;
+}
+
+.btn-add-book{
+  background: #e7c2d2;
+  color: #3a2a32;
+  border: 0;
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.btn-add-book:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(231,194,210,.35);
+}

@@ -19,11 +19,19 @@ export function BookIndex() {
     setBooks(data)
   }
 
-  return (
+ return (
     <section className="book-index">
       <BookFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
       <BookList books={books} />
-      <button onClick={() => navigate('/book/edit')}>Add Book</button>
+
+      <div className="add-book-container">
+        <button
+          className="btn-add-book"
+          onClick={() => navigate('/book/edit')}
+        >
+          Add Book
+        </button>
+      </div>
     </section>
   )
 }

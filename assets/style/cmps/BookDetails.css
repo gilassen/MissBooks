@@ -1,3 +1,25 @@
+.book-details {
+  max-width: 700px;      
+  margin: 0 auto;        
+  text-align: center;  
+  padding: 1rem;
+  font-family: inherit;
+}
+
+.book-details img {
+  display: block;
+  margin: 0 auto 1rem;   
+  border-radius: 6px;
+  max-width: 100%;      
+  height: auto;
+}
+
+.book-details h2,
+.book-details h3,
+.book-details p {
+  margin: 0.5rem 0;
+}
+
 .book-details .badge {
   margin-inline-start: .4rem;
   padding: .12rem .5rem;
@@ -34,7 +56,23 @@
 }
 
 .details-actions {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   display: flex;
+  justify-content: center; 
   gap: 0.5rem;
+}
+
+.details-actions button {
+  background: #e7c2d2;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.details-actions button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(231,194,210,.35);
 }
