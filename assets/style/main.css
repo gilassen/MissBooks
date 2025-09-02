@@ -1,12 +1,12 @@
 /* Base */
-@import './base/_vars.css';
-@import './base/_base.css';
+@import 'base/_vars.css';
+@import 'base/_base.css';
 
 /* Components */
-@import './cmps/_AppHeader.css';
-@import './cmps/_BookList.css';
-@import './cmps/_BookFilter.css';
-@import './cmps/_BookDetails.css'; 
-@import './cmps/_BookEdit.css';
-@import './cmps/_HomePage.css';     
-@import './cmps/_About.css';
+@import 'cmps/_AppHeader.css';
+@import 'cmps/_BookList.css';
+@import 'cmps/_BookFilter.css';
+@import 'cmps/_BookDetails.css'; 
+@import 'cmps/_BookEdit.css';
+@import 'cmps/_HomePage.css';     
+@import 'cmps/_About.css';
