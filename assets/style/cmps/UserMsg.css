@@ -1,0 +1,33 @@
+.user-msg {
+  position: fixed;
+  top: 16px !important;
+  right: 16px !important;
+
+  bottom: auto !important;
+  left: auto !important;
+
+  z-index: 10000;
+  width: 360px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  color: #111827;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-msg.success { background: #d1fae5; border-color: #34d399; color: #065f46; }
+.user-msg.error   { background: #fee2e2; border-color: #f87171; color: #7f1d1d; }
+
+.user-msg .close-btn {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  color: inherit;
+}

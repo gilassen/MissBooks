@@ -1,6 +1,7 @@
 import { bookService } from '../services/book.service.js'
 import { BookFilter } from '../cmps/BookFilter.jsx'   
 import { BookList } from '../cmps/BookList.jsx'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 const { useNavigate } = ReactRouterDOM
 const { useState, useEffect } = React
 
@@ -21,9 +22,11 @@ export function BookIndex() {
   async function onRemoveBook(bookId) {
     try {
       await bookService.remove(bookId)
-      setBooks(prev => prev.filter(book => book.id !== bookId)) 
+      setBooks(prev => prev.filter(book => book.id !== bookId))
+      showSuccessMsg('Book removed')
     } catch (err) {
       console.error('Failed to remove book:', err)
+      showErrorMsg('Could not remove book')
     }
   }
 

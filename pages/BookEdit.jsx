@@ -1,5 +1,6 @@
 const { useState } = React
 import { bookService } from '../services/book.service.js'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 const { useNavigate } = ReactRouterDOM
 
 export function BookEdit() {
@@ -26,9 +27,11 @@ export function BookEdit() {
 
     try {
       await bookService.save(newBook)
+      showSuccessMsg('Book added')
       navigate('/book')
     } catch (err) {
       console.log('Failed to save book:', err)
+      showErrorMsg('Could not save book')
     }
   }
 
