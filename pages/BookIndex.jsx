@@ -4,7 +4,6 @@ import { BookList } from '../cmps/BookList.jsx'
 const { useNavigate } = ReactRouterDOM
 const { useState, useEffect } = React
 
-
 export function BookIndex() {
   const navigate = useNavigate()
   const [books, setBooks] = useState([])
@@ -19,10 +18,20 @@ export function BookIndex() {
     setBooks(data)
   }
 
- return (
+  async function onRemoveBook(bookId) {
+    try {
+      await bookService.remove(bookId)
+      setBooks(prev => prev.filter(book => book.id !== bookId)) 
+    } catch (err) {
+      console.error('Failed to remove book:', err)
+    }
+  }
+
+  return (
     <section className="book-index">
       <BookFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
-      <BookList books={books} />
+
+      <BookList books={books} onRemoveBook={onRemoveBook} />
 
       <div className="add-book-container">
         <button

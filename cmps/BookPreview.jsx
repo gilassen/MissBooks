@@ -1,12 +1,16 @@
+export function BookPreview({ book }) {
+  return (
+    <article className="book-preview">
+      <h2 className="title">{book.title}</h2>
+      <h4>By: {book.author}</h4>
 
-export function BookPreview({book}) {
-
-    const { title, listPrice } = book
-
-    return (
-        <article className="book-preview">
-            <h3>{title}</h3>
-            <p>Price: {listPrice && listPrice.amount} {listPrice && listPrice.currencyCode}</p>
-        </article>
-    )
+      {book.thumbnail && (
+        <img
+          className="book-thumbnail"
+          src={book.thumbnail}
+          alt={book.title}
+        />
+      )}
+    </article>
+  )
 }
