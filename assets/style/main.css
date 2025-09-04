@@ -6,9 +6,12 @@
 @import "cmps/AppHeader.css";
 @import "cmps/BookList.css";
 @import "cmps/BookFilter.css";
-@import "cmps/BookDetails.css"; 
-@import "cmps/BookEdit.css";
-@import "cmps/HomePage.css";     
-@import "cmps/About.css";
 @import "cmps/BookFilter.css";
-@import "cmps/BookIndex.css";
+
+/*pages*/
+@import "pages/About.css";
+@import "pages/BookDetails.css"; 
+@import "pages/HomePage.css";     
+@import "pages/BookIndex.css";
+@import "pages/BookEdit.css";
+
