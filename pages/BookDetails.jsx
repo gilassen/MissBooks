@@ -2,11 +2,15 @@ const { useState, useEffect } = React
 import { bookService } from '../services/book.service.js'
 import { LongTxt } from '../cmps/LongTxt.jsx'
 const { Link, useParams, useNavigate } = ReactRouterDOM
+import { AddReview } from '../cmps/AddReview.jsx'
+import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isAddOpen, setIsAddOpen] = useState(false)
 
   const { bookId } = useParams()
   const navigate = useNavigate()
@@ -57,6 +61,17 @@ export function BookDetails() {
     )
   }
 
+  async function onRemoveReview(reviewId) {
+  try {
+    await bookService.removeReview(bookId, reviewId)
+    showSuccessMsg('Review removed')
+    loadBook() 
+  } catch (err) {
+    console.log('removeReview failed:', err)
+    showErrorMsg('Could not remove review')
+  }
+}
+
   return (
   <section className="book-details">
     {book.thumbnail && <img src={book.thumbnail} alt={book.title} />}
@@ -80,11 +95,40 @@ export function BookDetails() {
     </p>
 
     <p className={priceClass(book.listPrice && book.listPrice.amount)}>
-        Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}
-        {book.listPrice && book.listPrice.isOnSale && <span className="sale-badge">On Sale</span>}
+      Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}
+      {book.listPrice && book.listPrice.isOnSale && <span className="sale-badge">On Sale</span>}
     </p>
 
     {book.description && <LongTxt txt={book.description} length={100} />}
+
+    <hr />
+
+    <button onClick={() => setIsAddOpen(open => !open)}>
+      {isAddOpen ? 'Close review form' : 'Add review'}
+    </button>
+
+    {isAddOpen && (
+      <AddReview
+        bookId={bookId}
+        onAdded={() => { setIsAddOpen(false); loadBook() }}
+      />
+    )}
+
+    <h3>Reviews</h3>
+    {book.reviews && book.reviews.length ? (
+      <ul className="reviews">
+        {book.reviews.map(r => (
+          <li key={r.id} className="review-item">
+            <div><strong>{r.fullname}</strong></div>
+            <div>Rating: {r.rating}/5</div>
+            <div>Read at: {r.readAt}</div>
+            <button onClick={() => onRemoveReview(r.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>No reviews yet.</p>
+    )}
 
     <div className="details-actions">
       <button onClick={() => navigate('/book')}>Back</button>
@@ -93,4 +137,5 @@ export function BookDetails() {
     </div>
   </section>
 )
+
 }

@@ -1,0 +1,108 @@
+.add-review {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  max-width: 380px;
+}
+
+.add-review h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.add-review form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.add-review label {
+  font-size: 14px;
+  color: #374151;
+}
+
+.add-review input,
+.add-review select {
+  height: 36px;
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+}
+
+.add-review input:focus,
+.add-review select:focus {
+  outline: 2px solid #93c5fd;
+  outline-offset: 1px;
+}
+
+.add-review .actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.add-review button {
+  min-width: 90px;
+  height: 36px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.add-review button[type="submit"] {
+  background: #2563eb;  
+  color: #fff;
+}
+
+.add-review button[type="button"] {
+  background: #e5e7eb;   
+  color: #111827;
+}
+
+.reviews {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  max-width: 520px;
+}
+
+.review-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.review-item strong {
+  font-size: 15px;
+}
+
+.review-item .meta {
+  margin-top: 4px;
+  color: #6b7280; 
+  font-size: 14px;
+}
+
+.review-item button {
+  margin-top: 8px;
+  border: 0;
+  background: #fee2e2;   
+  color: #991b1b;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.book-details hr {
+  margin: 16px 0;
+  border: 0;
+  border-top: 1px solid #e5e7eb;
+}

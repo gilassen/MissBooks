@@ -7,6 +7,7 @@
 @import "cmps/BookList.css";
 @import "cmps/BookFilter.css";
 @import "cmps/BookFilter.css";
+@import "cmps/AddReview.css";
 
 /*pages*/
 @import "pages/About.css";
