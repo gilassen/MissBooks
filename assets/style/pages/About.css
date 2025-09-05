@@ -28,3 +28,32 @@
   margin-bottom: 1rem;
   color: #4a5568;
 }
+
+
+.about nav {
+  display: flex;
+  justify-content: center;
+  gap: 15px; 
+  margin-top: 1.5rem;
+}
+
+.about nav a {
+  text-decoration: none;
+  color: #2f855a; 
+  background-color: #f0fff4; 
+  padding: 8px 16px; 
+  border-radius: 8px; 
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.about nav a:hover {
+  background-color: #2f855a; 
+  color: #ffffff; 
+}
+
+.about nav a.active {
+  background-color: #2f855a;
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

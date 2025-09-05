@@ -1,3 +1,5 @@
+const { NavLink, Outlet } = ReactRouterDOM;
+
 export function AboutUs() {
   return (
     <section className="about">
@@ -6,6 +8,17 @@ export function AboutUs() {
         Welcome to Miss Books 📚 – a place to explore, filter, and discover
         great books. This project is part of the Coding Academy practice tasks.
       </p>
+
+      <hr />
+
+            <nav>
+                <NavLink to="/about/team">Team</NavLink>
+                <NavLink to="/about/goal">Goal</NavLink>
+            </nav>
+            <Outlet />
+  
     </section>
+
+    
   )
 }

@@ -9,6 +9,8 @@
 @import "cmps/BookFilter.css";
 @import "cmps/AddReview.css";
 @import "cmps/UserMsg.css";
+@import "cmps/AboutCmps/AboutTeam.css";
+@import "cmps/AboutCmps/AboutGoal.css";
 
 /*pages*/
 @import "pages/About.css";
