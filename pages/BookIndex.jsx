@@ -43,13 +43,23 @@ export function BookIndex() {
       <BookList books={books} onRemoveBook={onRemoveBook} />
 
       <div className="add-book-container">
-        <button
-          className="btn-add-book"
-          onClick={() => navigate('/book/edit')}
-        >
-          Add Book
-        </button>
-      </div>
+  <button
+    className="btn-add-book"
+    onClick={() => navigate('/book/edit')}
+    title="Add a book manually"
+  >
+    Add Manually
+  </button>
+
+  <button
+    className="btn-add-google"
+    onClick={() => navigate('/book/add')}
+    title="Search & add from Google Books"
+  >
+    Add from Google
+  </button>
+</div>
+
     </section>
   )
 }

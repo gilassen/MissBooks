@@ -15,6 +15,7 @@ export const bookService = {
   getPrevBookId,
   addReview,
   removeReview,
+  addGoogleBook,
 }
 
 function getNextBookId(bookId) {
@@ -182,4 +183,56 @@ function removeReview(bookId, reviewId) {
 
     return save(bookToSave)
   })
+}
+
+function addGoogleBook(googleBook) {
+  const mapped = mapGoogleToAppBook(googleBook)
+
+  return storageService.query(BOOK_KEY).then(books => {
+    const title = mapped.title || ''
+    const author0 = (mapped.authors && mapped.authors[0]) ? mapped.authors[0] : ''
+    const exists = books.some(b => {
+      const bTitle = b.title || ''
+      const bAuthor0 = (b.authors && b.authors[0]) ? b.authors[0] : ''
+      return bTitle.toLowerCase() === title.toLowerCase() &&
+             bAuthor0.toLowerCase() === author0.toLowerCase()
+    })
+    if (exists) {
+      return Promise.reject(new Error('Book already exists'))
+    }
+    return storageService.post(BOOK_KEY, mapped)
+  })
+}
+
+function mapGoogleToAppBook(googleBook) {
+  const vi = googleBook && googleBook.volumeInfo ? googleBook.volumeInfo : {}
+
+  const title = vi.title || ''
+  const subtitle = vi.subtitle || ''
+  const authors = Array.isArray(vi.authors) ? vi.authors : []
+  const publishedDate = vi.publishedDate || ''
+  const description = vi.description || ''
+  const pageCount = typeof vi.pageCount === 'number' ? vi.pageCount : 0
+  const categories = Array.isArray(vi.categories) ? vi.categories : []
+  const thumbnail =
+    vi.imageLinks && vi.imageLinks.thumbnail
+      ? vi.imageLinks.thumbnail
+      : 'https://picsum.photos/seed/book/120/160'
+  const language = vi.language || 'en'
+
+  const listPrice = { amount: 0, currencyCode: 'EUR', isOnSale: false }
+
+  return {
+    title,
+    subtitle,
+    authors,
+    publishedDate,
+    description,
+    pageCount,
+    categories,
+    thumbnail,
+    language,
+    listPrice,
+    reviews: [],
+  }
 }

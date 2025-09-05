@@ -1,0 +1,72 @@
+.book-add {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+  font-family: inherit;
+}
+
+.book-add h2 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  color: #2d3748;
+}
+
+.book-add form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.book-add input[type="text"] {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+}
+
+.book-add button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background-color: #e7c2d2;
+  color: #3a2a32;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.book-add button:hover {
+  background-color: #d9aabc;
+}
+
+.book-add ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book-add li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #edf2f7;
+}
+
+.book-add li span {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.book-add li button {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  border-radius: 0.3rem;
+  background-color: #6b8f71;
+  color: #fff;
+}
+
+.book-add li button:hover {
+  background-color: #56735a;
+}

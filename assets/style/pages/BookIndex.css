@@ -1,21 +1,36 @@
-.add-book-container{
+.add-book-container {
   display: flex;
-  justify-content: center; 
+  justify-content: center;
+  gap: 0.75rem;      
   margin-top: 1rem;
 }
 
-.btn-add-book{
-  background: #e7c2d2;
-  color: #3a2a32;
-  border: 0;
+.btn-add-book,
+.btn-add-google {
   padding: 0.55rem 1.25rem;
+  border: 0;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease;
 }
 
-.btn-add-book:hover{
+.btn-add-book {
+  background: #e7c2d2;
+  color: #3a2a32;
+}
+
+.btn-add-book:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(231,194,210,.35);
+  box-shadow: 0 8px 18px rgba(231, 194, 210, .35);
+}
+
+.btn-add-google {
+  background: #6b8f71;
+  color: #fff;
+}
+
+.btn-add-google:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(107, 143, 113, .35);
 }
