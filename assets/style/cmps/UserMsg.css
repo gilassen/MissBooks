@@ -1,33 +1,84 @@
 .user-msg {
   position: fixed;
-  top: 16px !important;
-  right: 16px !important;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);         
+  z-index: 9999;
 
-  bottom: auto !important;
-  left: auto !important;
-
-  z-index: 10000;
-  width: 360px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  background: #f9fafb;
-  color: #111827;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+
+  min-width: 200px;
+  max-width: min(92vw, 420px);
+  padding: 0.75rem 1rem;
+
+  border-radius: 12px;
+  background-color: #f1f1f1;
+  color: #111827;                        
+  text-align: center;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+
+  animation: usermsg-slideDown 0.25s ease-out;
 }
 
-.user-msg.success { background: #d1fae5; border-color: #34d399; color: #065f46; }
-.user-msg.error   { background: #fee2e2; border-color: #f87171; color: #7f1d1d; }
+.user-msg.success {
+  background-color: #d1fae5;             
+  color: #065f46;                         
+}
+
+.user-msg.error {
+  background-color: #fee2e2;             
+  color: #7f1d1d;                       
+}
+
+.user-msg.info {
+  background-color: #dbeafe;             
+  color: #1e3a8a;                        
+}
+
+/* טקסט ההודעה */
+.user-msg h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.3;
+  padding: 0 0.25rem;
+}
 
 .user-msg .close-btn {
-  margin-left: auto;
+  appearance: none;
   border: none;
-  background: transparent;
-  font-weight: 700;
-  font-size: 16px;
   cursor: pointer;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  align-self: flex-end;                 
+  margin-top: 0.35rem;
+
+  font-size: 0.9rem;
+  line-height: 1;
   color: inherit;
+
+  background-color: rgba(255, 255, 255, 0.35);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.user-msg .close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .user-msg {
+    top: 0.6rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 10px;
+  }
+  .user-msg .close-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 0.85rem;
+  }
 }
