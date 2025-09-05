@@ -62,3 +62,10 @@
   transform: translateY(-1px);
   box-shadow: 0 8px 18px rgba(231,194,210,.35);
 }
+
+/* יישור רוחב ומרווחי צד כמו ההדר */
+.book-filter {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem; /* אותו padding צד כמו .header-container */
+}
