@@ -13,11 +13,17 @@ export function BookIndex() {
   useEffect(() => {
     loadBooks()
   }, [filterBy])
-
+  
   async function loadBooks() {
-    const data = await bookService.query(filterBy)
-    setBooks(data)
+    try {
+      const data = await bookService.query(filterBy)
+      setBooks(data)
+    } catch (err) {
+      console.error('Failed to load books:', err)
+      showErrorMsg('Could not load books')
+    }
   }
+
 
   async function onRemoveBook(bookId) {
     try {
