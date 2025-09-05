@@ -5,7 +5,6 @@ const { Link, useParams, useNavigate } = ReactRouterDOM
 import { AddReview } from '../cmps/AddReview.jsx'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
-
 export function BookDetails() {
   const [book, setBook] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -15,9 +14,7 @@ export function BookDetails() {
   const { bookId } = useParams()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    loadBook()
-  }, [bookId])
+  useEffect(() => { loadBook() }, [bookId])
 
   function loadBook() {
     setIsLoading(true)
@@ -61,18 +58,42 @@ export function BookDetails() {
     )
   }
 
-  async function onRemoveReview(reviewId) {
+   async function onRemoveReview(reviewId) {
+    try {
+      await bookService.removeReview(bookId, reviewId)
+      showSuccessMsg('Review removed')
+      loadBook()
+    } catch (err) {
+      console.log('removeReview failed:', err)
+      showErrorMsg('Could not remove review')
+    }
+  }
+
+ async function onAddReview(review) {
   try {
-    await bookService.removeReview(bookId, reviewId)
-    showSuccessMsg('Review removed')
-    loadBook() 
+    await bookService.addReview(bookId, review)  
+    showSuccessMsg('Review added')
+    setIsAddOpen(false)
+    loadBook()                              
   } catch (err) {
-    console.log('removeReview failed:', err)
-    showErrorMsg('Could not remove review')
+    console.log('addReview failed:', err)
+    showErrorMsg('Could not add review')
   }
 }
 
-  return (
+
+   if (isLoading) return <p>Loading...</p>
+
+  if (error || !book) {
+    return (
+      <section className="book-details">
+        <p>Book not found.</p>
+        <Link to="/book">Back to list</Link>
+      </section>
+    )
+  }
+
+return (
   <section className="book-details">
     {book.thumbnail && <img src={book.thumbnail} alt={book.title} />}
 
@@ -109,8 +130,8 @@ export function BookDetails() {
 
     {isAddOpen && (
       <AddReview
-        bookId={bookId}
-        onAdded={() => { setIsAddOpen(false); loadBook() }}
+        onSubmit={onAddReview}
+        onCancel={() => setIsAddOpen(false)}
       />
     )}
 
@@ -132,8 +153,8 @@ export function BookDetails() {
 
     <div className="details-actions">
       <button onClick={() => navigate('/book')}>Back</button>
-      <button><Link to={`/book/${book.prevBookId}`}>Prev</Link></button>
-      <button><Link to={`/book/${book.nextBookId}`}>Next</Link></button>
+      <Link to={`/book/${book.prevBookId}`}><button>Prev</button></Link>
+      <Link to={`/book/${book.nextBookId}`}><button>Next</button></Link>
     </div>
   </section>
 )

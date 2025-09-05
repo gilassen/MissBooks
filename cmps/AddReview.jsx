@@ -1,52 +1,40 @@
-import { bookService } from '../services/book.service.js'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-
 const { useState } = React
 
-export function AddReview({ bookId, onAdded, onCancel }) {
-  const [form, setForm] = useState({ fullname: '', rating: 5, readAt: '' })
+export function AddReview({ onSubmit, onCancel }) {
+  const [form, setForm] = useState({ fullname: '', rating: 1, readAt: '' })
 
-  function handleChange(ev) {
-    const { name, value } = ev.target
+  function handleChange({ target }) {
+    let { name, value, type } = target
+    if (type === 'number') value = +value || 0
     setForm(prev => ({ ...prev, [name]: value }))
   }
 
-  async function onSubmit(ev) {
+  function submit(ev) {
     ev.preventDefault()
-    if (!form.fullname || !form.rating || !form.readAt) {
-      showErrorMsg('Please fill all fields')
-      return
-    }
-    try {
-      await bookService.addReview(bookId, form)
-      showSuccessMsg('Review added')
-      setForm({ fullname: '', rating: 5, readAt: '' })
-      if (onAdded) onAdded()       
-    } catch (err) {
-      console.log('addReview failed:', err)
-      showErrorMsg('Could not add review')
-    }
+    if (onSubmit) onSubmit(form)    
   }
 
   return (
     <section className="add-review">
       <h3>Add a review</h3>
-      <form onSubmit={onSubmit}>
-        <label>Full name</label>
-        <input name="fullname" value={form.fullname} onChange={handleChange} />
 
-        <label>Rating</label>
-        <select name="rating" value={form.rating} onChange={handleChange}>
-          <option value={5}>5</option><option value={4}>4</option>
-          <option value={3}>3</option><option value={2}>2</option><option value={1}>1</option>
+      <form onSubmit={submit}>
+        <label htmlFor="fullname">Full name</label>
+        <input id="fullname" name="fullname" type="text"
+               value={form.fullname} onChange={handleChange} required />
+
+        <label htmlFor="rating">Rating</label>
+        <select id="rating" name="rating" value={form.rating} onChange={handleChange}>
+          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
         </select>
 
-        <label>Read at</label>
-        <input type="date" name="readAt" value={form.readAt} onChange={handleChange} />
+        <label htmlFor="readAt">Read at</label>
+        <input id="readAt" name="readAt" type="date"
+               value={form.readAt} onChange={handleChange} />
 
         <div className="actions">
           <button type="submit">Save</button>
-          {onCancel ? <button type="button" onClick={onCancel}>Cancel</button> : null}
+          <button type="button" onClick={onCancel}>Cancel</button>
         </div>
       </form>
     </section>
