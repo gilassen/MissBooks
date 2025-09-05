@@ -17,8 +17,6 @@ export const bookService = {
   removeReview,
 }
 
-
-
 function getNextBookId(bookId) {
   return storageService.query(BOOK_KEY).then(books => {
     const idx = books.findIndex(book => book.id === bookId)
@@ -54,7 +52,6 @@ function query(filterBy = {}) {
 
     if (filterBy.onSale) {
       res = res.filter(book => book.listPrice && !!book.listPrice.isOnSale)
-
     }
 
     if (filterBy.publishedAfter) {
@@ -91,10 +88,24 @@ function save(book) {
   else return storageService.post(BOOK_KEY, book)
 }
 
-function getEmptyBook(title = '', amount = 0, currencyCode = 'EUR', isOnSale = false) {
+function getEmptyBook(
+  title = '',
+  amount = 0,
+  currencyCode = 'EUR',
+  isOnSale = false
+) {
   return {
     title,
+    subtitle: '',
+    authors: [],
+    publishedDate: '',
+    description: '',
+    pageCount: 0,
+    categories: [],
+    thumbnail: 'https://coding-academy.org/books-photos/1.jpg',
+    language: 'en',
     listPrice: { amount, currencyCode, isOnSale },
+    reviews: [],
   }
 }
 
@@ -139,7 +150,6 @@ function _createBooks() {
 
   utilService.saveToStorage(BOOK_KEY, books)
 }
-
 
 function addReview(bookId, review) {
   const newReview = {
