@@ -9,6 +9,7 @@ import { BookAdd } from './pages/BookAdd.jsx'
 import { AboutTeam } from './cmps/AboutCmps/AboutTeam.jsx'
 import { AboutGoal } from './cmps/AboutCmps/AboutGoal.jsx'
 import { AppLoader } from "./cmps/AppLoader.jsx"
+import { BookDashboard } from './pages/BookDashboard.jsx'
 
 
 const Router = ReactRouterDOM.HashRouter
@@ -33,6 +34,7 @@ export function RootCmp() {
             <Route path="/book/edit/:bookId" element={<BookEdit />} />
             <Route path="*" element={<h2>Not found</h2>} />
             <Route path="/book/add" element={<BookAdd />} />
+            <Route path="/dashboard" element={<BookDashboard />} />
           </Routes>
         </main>
         <UserMsg />
