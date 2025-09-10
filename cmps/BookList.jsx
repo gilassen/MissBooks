@@ -1,8 +1,8 @@
 const { Link } = ReactRouterDOM
 import { BookPreview } from './BookPreview.jsx'
 
-export function BookList({ books = [], onRemoveBook }) {
-  if (!books.length) return <p>No books to show…</p>
+export function BookList({ books = [], onRemoveBook, isLoaded }) {
+  if (isLoaded && !books.length) return <p>No books to show…</p>
 
   return (
     <ul className="book-list">

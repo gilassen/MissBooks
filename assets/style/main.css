@@ -11,6 +11,7 @@
 @import "cmps/UserMsg.css";
 @import "cmps/AboutCmps/AboutTeam.css";
 @import "cmps/AboutCmps/AboutGoal.css";
+@import "cmps/AppLoader.css";
 
 /*pages*/
 @import "pages/About.css";

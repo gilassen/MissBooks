@@ -8,6 +8,7 @@ import { UserMsg }     from "./cmps/UserMsg.jsx"
 import { BookAdd } from './pages/BookAdd.jsx'
 import { AboutTeam } from './cmps/AboutCmps/AboutTeam.jsx'
 import { AboutGoal } from './cmps/AboutCmps/AboutGoal.jsx'
+import { AppLoader } from "./cmps/AppLoader.jsx"
 
 
 const Router = ReactRouterDOM.HashRouter
@@ -35,6 +36,7 @@ export function RootCmp() {
           </Routes>
         </main>
         <UserMsg />
+        <AppLoader/>
       </section>
     </Router>
   )

@@ -3,11 +3,10 @@ import { bookService } from '../services/book.service.js'
 import { LongTxt } from '../cmps/LongTxt.jsx'
 const { Link, useParams, useNavigate } = ReactRouterDOM
 import { AddReview } from '../cmps/AddReview.jsx'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+import { eventBusService, showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 
 export function BookDetails() {
   const [book, setBook] = useState(null)
-  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isAddOpen, setIsAddOpen] = useState(false)
 
@@ -17,17 +16,18 @@ export function BookDetails() {
   useEffect(() => { loadBook() }, [bookId])
 
   function loadBook() {
-    setIsLoading(true)
+    eventBusService.emit('show-loader')
     setError(null)
     bookService.get(bookId)
       .then(setBook)
       .catch(err => setError(err.message || 'Book not found'))
-      .finally(() => setIsLoading(false))
+      .finally(() => eventBusService.emit('hide-loader'))
   }
 
-  function readingLevel(pageCount = 0) {
+  function readingLevel(pageCount) {
+    if (!pageCount) return ''
     if (pageCount > 500) return 'Serious Reading'
-    if (pageCount > 200) return 'Descent Reading'
+    if (pageCount > 200) return 'Decent Reading'
     if (pageCount < 100) return 'Light Reading'
     return ''
   }
@@ -41,24 +41,27 @@ export function BookDetails() {
     return ''
   }
 
-  function priceClass(amount = 0) {
+  function priceClass(amount) {
+    if (!amount) return ''
     if (amount > 150) return 'price-red'
     if (amount < 20) return 'price-green'
     return ''
   }
 
-  if (isLoading) return <p>Loading...</p>
-
-  if (error || !book) {
+  if (error) {
     return (
       <section className="book-details">
-        <p>Book not found.</p>
+        <p>{error}</p>
         <Link to="/book">Back to list</Link>
       </section>
     )
   }
 
-   async function onRemoveReview(reviewId) {
+  if (!book) {
+    return null
+  }
+
+  async function onRemoveReview(reviewId) {
     try {
       await bookService.removeReview(bookId, reviewId)
       showSuccessMsg('Review removed')
@@ -69,94 +72,87 @@ export function BookDetails() {
     }
   }
 
- async function onAddReview(review) {
-  try {
-    await bookService.addReview(bookId, review)  
-    showSuccessMsg('Review added')
-    setIsAddOpen(false)
-    loadBook()                              
-  } catch (err) {
-    console.log('addReview failed:', err)
-    showErrorMsg('Could not add review')
-  }
-}
-
-
-   if (isLoading) return <p>Loading...</p>
-
-  if (error || !book) {
-    return (
-      <section className="book-details">
-        <p>Book not found.</p>
-        <Link to="/book">Back to list</Link>
-      </section>
-    )
+  async function onAddReview(review) {
+    try {
+      await bookService.addReview(bookId, review)
+      showSuccessMsg('Review added')
+      setIsAddOpen(false)
+      loadBook()
+    } catch (err) {
+      console.log('addReview failed:', err)
+      showErrorMsg('Could not add review')
+    }
   }
 
-return (
-  <section className="book-details">
-    {book.thumbnail && <img src={book.thumbnail} alt={book.title} />}
+  return (
+    <section className="book-details">
+      {book.thumbnail && <img src={book.thumbnail} alt={book.title} />}
 
-    <h2>{book.title}</h2>
-    {book.subtitle && <h3>{book.subtitle}</h3>}
-    {book.authors && book.authors.length ? <p>By: {book.authors.join(', ')}</p> : null}
+      <h2>{book.title}</h2>
+      {book.subtitle && <h3>{book.subtitle}</h3>}
+      {book.authors && book.authors.length > 0
+        ? <p>By: {book.authors.join(', ')}</p>
+        : null}
 
-    <p>
-      Pages: {book.pageCount}
-      {readingLevel(book.pageCount) && (
-        <span className="badge"> {readingLevel(book.pageCount)}</span>
+      <p>
+        Pages: {book.pageCount}
+        {readingLevel(book.pageCount) && (
+          <span className="badge"> {readingLevel(book.pageCount)}</span>
+        )}
+      </p>
+
+      <p>
+        Published: {book.publishedDate}
+        {publishTag(book.publishedDate) && (
+          <span className="badge"> {publishTag(book.publishedDate)}</span>
+        )}
+      </p>
+
+      <p className={priceClass(book.listPrice && book.listPrice.amount)}>
+        Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}
+        {book.listPrice && book.listPrice.isOnSale && <span className="sale-badge">On Sale</span>}
+      </p>
+
+      {book.description && <LongTxt txt={book.description} length={100} />}
+
+      <hr />
+
+      <button onClick={() => setIsAddOpen(open => !open)}>
+        {isAddOpen ? 'Close review form' : 'Add review'}
+      </button>
+
+      {isAddOpen && (
+        <AddReview
+          onSubmit={onAddReview}
+          onCancel={() => setIsAddOpen(false)}
+        />
       )}
-    </p>
 
-    <p>
-      Published: {book.publishedDate}
-      {publishTag(book.publishedDate) && (
-        <span className="badge"> {publishTag(book.publishedDate)}</span>
+      <h3>Reviews</h3>
+      {book.reviews && book.reviews.length > 0 ? (
+        <ul className="reviews">
+          {book.reviews.map(r => (
+            <li key={r.id} className="review-item">
+              <div><strong>{r.fullname}</strong></div>
+              <div>Rating: {r.rating}/5</div>
+              <div>Read at: {r.readAt}</div>
+              <button onClick={() => onRemoveReview(r.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No reviews yet.</p>
       )}
-    </p>
 
-    <p className={priceClass(book.listPrice && book.listPrice.amount)}>
-      Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}
-      {book.listPrice && book.listPrice.isOnSale && <span className="sale-badge">On Sale</span>}
-    </p>
-
-    {book.description && <LongTxt txt={book.description} length={100} />}
-
-    <hr />
-
-    <button onClick={() => setIsAddOpen(open => !open)}>
-      {isAddOpen ? 'Close review form' : 'Add review'}
-    </button>
-
-    {isAddOpen && (
-      <AddReview
-        onSubmit={onAddReview}
-        onCancel={() => setIsAddOpen(false)}
-      />
-    )}
-
-    <h3>Reviews</h3>
-    {book.reviews && book.reviews.length ? (
-      <ul className="reviews">
-        {book.reviews.map(r => (
-          <li key={r.id} className="review-item">
-            <div><strong>{r.fullname}</strong></div>
-            <div>Rating: {r.rating}/5</div>
-            <div>Read at: {r.readAt}</div>
-            <button onClick={() => onRemoveReview(r.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p>No reviews yet.</p>
-    )}
-
-    <div className="details-actions">
-      <button onClick={() => navigate('/book')}>Back</button>
-      <Link to={`/book/${book.prevBookId}`}><button>Prev</button></Link>
-      <Link to={`/book/${book.nextBookId}`}><button>Next</button></Link>
-    </div>
-  </section>
-)
-
+      <div className="details-actions">
+        <button onClick={() => navigate('/book')}>Back</button>
+        {book.prevBookId && (
+          <Link to={`/book/${book.prevBookId}`}><button>Prev</button></Link>
+        )}
+        {book.nextBookId && (
+          <Link to={`/book/${book.nextBookId}`}><button>Next</button></Link>
+        )}
+      </div>
+    </section>
+  )
 }

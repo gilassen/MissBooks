@@ -1,20 +1,19 @@
 const { useState } = React
 import { googleBookService } from '../services/google-book.service.js'
 import { bookService } from '../services/book.service.js'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
+import { eventBusService, showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 const { useNavigate } = ReactRouterDOM
 
 export function BookAdd() {
   const navigate = useNavigate()
   const [txt, setTxt] = useState('')
   const [results, setResults] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
 
-  async function onSearch(ev) {
+   async function onSearch(ev) {
     ev.preventDefault()
     if (!txt.trim()) return
-    setIsLoading(true)
+    eventBusService.emit('show-loader')
     setError(null)
     try {
       const books = await googleBookService.query(txt.trim())
@@ -24,10 +23,9 @@ export function BookAdd() {
       setError('Could not fetch results')
       setResults([])
     } finally {
-      setIsLoading(false)
+      eventBusService.emit('hide-loader')
     }
-  }
-
+   }
   async function onAdd(googleBook) {
     try {
       await bookService.addGoogleBook(googleBook)
@@ -53,7 +51,6 @@ export function BookAdd() {
         <button type="button" onClick={() => navigate('/book')}>Back</button>
       </form>
 
-      {isLoading && <p>Loading…</p>}
       {error && <p className="error">{error}</p>}
 
       <ul className="results">
