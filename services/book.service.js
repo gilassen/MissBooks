@@ -17,6 +17,7 @@ export const bookService = {
   removeReview,
   addGoogleBook,
   getCategoryStats,
+  getFilterFromSearchParams,
 }
 
 function getNextBookId(bookId) {
@@ -236,6 +237,23 @@ function mapGoogleToAppBook(googleBook) {
     listPrice,
     reviews: [],
   }
+}
+
+function getFilterFromSearchParams(searchParams) {
+  const def = getDefaultFilter()
+  const filterBy = {}
+  for (const field in def) {
+    let val = searchParams.get(field)
+    if (val === null) val = def[field]
+    else {
+      if (field === 'onSale') val = (val === 'true')
+      if (field === 'minPrice' || field === 'maxPrice' || field === 'publishedAfter') {
+        val = +val || 0
+      }
+    }
+    filterBy[field] = val
+  }
+  return filterBy
 }
 
 function _getBookCountByCategoryMap(books) {

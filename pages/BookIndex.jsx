@@ -9,35 +9,30 @@ const { useState, useEffect } = React
 export function BookIndex() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const defaultFilter = (bookService.getFilterFromSearchParams)
+    ? bookService.getFilterFromSearchParams(searchParams)
+    : bookService.getDefaultFilter()
+
   const [books, setBooks] = useState([])
-  const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
+  const [filterBy, setFilterBy] = useState(defaultFilter)
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    const txt = searchParams.get('txt') || ''
-    const minPrice = +searchParams.get('minPrice') || 0
-    const maxPrice = +searchParams.get('maxPrice') || 0
-    const onSale = searchParams.get('onSale') === 'true'
-    const publishedAfter = searchParams.get('publishedAfter') || ''
-    setFilterBy({ txt, minPrice, maxPrice, onSale, publishedAfter })
-  }, [])
-
-  useEffect(() => {
-    loadBooks()
-
-    const paramsToSet = {}
+    const params = {}
     for (const key in filterBy) {
-      if (filterBy[key] !== '' && filterBy[key] !== 0 && filterBy[key] !== false) {
-        paramsToSet[key] = filterBy[key]
-      }
+      const val = filterBy[key]
+      if (val !== '' && val !== 0 && val !== false) params[key] = val
     }
-    setSearchParams(paramsToSet)
+    setSearchParams(params)
+
+    loadBooks(filterBy)
   }, [filterBy])
 
-  async function loadBooks() {
+  async function loadBooks(currFilter = filterBy) {
     eventBusService.emit('show-loader')
     try {
-      const data = await bookService.query(filterBy)
+      const data = await bookService.query(currFilter)
       setBooks(data)
     } catch (err) {
       console.error('Failed to load books:', err)
