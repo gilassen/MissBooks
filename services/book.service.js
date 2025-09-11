@@ -16,6 +16,7 @@ export const bookService = {
   addReview,
   removeReview,
   addGoogleBook,
+  getCategoryStats,
 }
 
 function getNextBookId(bookId) {
@@ -235,4 +236,28 @@ function mapGoogleToAppBook(googleBook) {
     listPrice,
     reviews: [],
   }
+}
+
+function _getBookCountByCategoryMap(books) {
+  const map = books.reduce((acc, book) => {
+    const categories = (book && book.categories && book.categories.length)
+      ? book.categories
+      : ['Uncategorized']
+    const cat = categories[0]
+    if (!acc[cat]) acc[cat] = 0
+    acc[cat]++
+    return acc
+  }, {})
+  return map
+}
+
+function getCategoryStats() {
+  return storageService.query(BOOK_KEY).then(books => {
+    const byCatMap = _getBookCountByCategoryMap(books)
+    const data = Object.keys(byCatMap).map(cat => ({
+      title: cat,
+      value: Math.round((byCatMap[cat] / books.length) * 100)
+    }))
+    return data.sort((a, b) => b.value - a.value)
+  })
 }
