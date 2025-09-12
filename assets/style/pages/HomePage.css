@@ -1,7 +1,57 @@
 .home {
-  max-width: 960px; margin: 0 auto; padding: 1.5rem; text-align: center;
-  background: linear-gradient(180deg, var(--clr2bg-light,#fdf0f7), transparent);
-  border-radius: 12px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  background: linear-gradient(180deg, #ffeaf3 0%, transparent 100%);
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.08);
 }
-.home h2 { font-size: 1.6rem; margin-bottom: .5rem; }
-.home p { color: var(--gray3,#444); }
+
+.home h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: .75rem;
+}
+
+.home p {
+  color: #6b7280;
+  font-size: 1rem;
+  max-width: 60ch;
+  margin: 0 auto 1.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: .6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  transition: background .2s ease;
+}
+
+.btn-primary {
+  background: #5e6f64;
+  color: #fff;
+}
+.btn-primary:hover {
+  background: #4e5b52;
+}
+
+.btn-ghost {
+  background: #fff;
+  color: #5e6f64;
+  border: 1px solid #e5e7eb;
+}
+.btn-ghost:hover {
+  background: #f9fafb;
+}
