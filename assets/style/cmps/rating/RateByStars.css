@@ -1,0 +1,28 @@
+.stars {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.star {
+  font-size: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid #dfe3ea;
+  background: #f7f8fb;
+  color: #c4cbd6;     
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s ease-in-out;
+}
+.star.on {
+  color: #f59f00;    
+  background: #fff3bf;
+  border-color: #ffd43b;
+}
+.star:hover { transform: translateY(-1px); }
+.star:focus-visible { outline: 2px solid #6aa1ff; outline-offset: 2px; }

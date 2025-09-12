@@ -1,0 +1,35 @@
+.book-rater { margin-top: 8px; }
+
+.book-rater .rate-type {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0 12px;
+}
+.book-rater .rate-type label {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+}
+
+.book-rater .rate-cmp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.book-rater select,
+.book-rater input[type="number"] {
+  width: 180px;
+  height: 44px;
+  text-align: center;
+  border: 1px solid #dfe3ea;
+  border-radius: 12px;
+  background: #f9fbfd;
+  font-size: 16px;
+}

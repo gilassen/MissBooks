@@ -1,0 +1,13 @@
+.rate-by-select {
+  display: flex;
+  justify-content: center;
+}
+.rate-by-select select {
+  width: 180px;
+  height: 44px;
+  text-align: center;
+  border: 1px solid #dfe3ea;
+  border-radius: 12px;
+  background: #f9fbfd;
+  font-size: 16px;
+}

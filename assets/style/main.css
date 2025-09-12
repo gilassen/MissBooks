@@ -13,6 +13,11 @@
 @import "cmps/AboutCmps/AboutGoal.css";
 @import "cmps/AppLoader.css";
 @import "cmps/chart.css";
+@import "cmps/rating/BookRater.css";
+@import "cmps/rating/RateBySelect.css";
+@import "cmps/rating/RateByStars.css";
+@import "cmps/rating/RateByTextbox.css";
+
 
 /*pages*/
 @import "pages/About.css";

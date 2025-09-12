@@ -1,17 +1,25 @@
 const { useState } = React
+import { BookRater } from './rating/BookRater.jsx' 
 
 export function AddReview({ onSubmit, onCancel }) {
   const [form, setForm] = useState({ fullname: '', rating: 1, readAt: '' })
 
   function handleChange({ target }) {
-    let { name, value, type } = target
-    if (type === 'number') value = +value || 0
+    const { name, value } = target
     setForm(prev => ({ ...prev, [name]: value }))
+  }
+
+  function handleRate(val) {
+    let v = +val || 0
+    if (v < 1) v = 1
+    if (v > 5) v = 5
+    setForm(prev => ({ ...prev, rating: v }))
   }
 
   function submit(ev) {
     ev.preventDefault()
-    if (onSubmit) onSubmit(form)    
+    const toSend = { ...form, rating: +form.rating || 0 }
+    if (onSubmit) onSubmit(toSend)
   }
 
   return (
@@ -20,17 +28,18 @@ export function AddReview({ onSubmit, onCancel }) {
 
       <form onSubmit={submit}>
         <label htmlFor="fullname">Full name</label>
-        <input id="fullname" name="fullname" type="text"
-               value={form.fullname} onChange={handleChange} required />
+        <input
+          id="fullname" name="fullname" type="text"
+          value={form.fullname} onChange={handleChange} required
+        />
 
-        <label htmlFor="rating">Rating</label>
-        <select id="rating" name="rating" value={form.rating} onChange={handleChange}>
-          {[1,2,3,4,5].map(n => <option key={n} value={n}>{n}</option>)}
-        </select>
+        <BookRater value={form.rating} onChange={handleRate} />
 
         <label htmlFor="readAt">Read at</label>
-        <input id="readAt" name="readAt" type="date"
-               value={form.readAt} onChange={handleChange} />
+        <input
+          id="readAt" name="readAt" type="date"
+          value={form.readAt} onChange={handleChange}
+        />
 
         <div className="actions">
           <button type="submit">Save</button>

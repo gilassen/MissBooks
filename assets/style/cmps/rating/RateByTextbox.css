@@ -1,0 +1,13 @@
+.rate-by-textbox {
+  display: flex;
+  justify-content: center;
+}
+.rate-by-textbox input[type="number"] {
+  width: 120px;
+  height: 44px;
+  text-align: center;
+  border: 1px solid #dfe3ea;
+  border-radius: 12px;
+  background: #f9fbfd;
+  font-size: 16px;
+}
