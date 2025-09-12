@@ -3,8 +3,10 @@ export function AboutGoal() {
     <section className="about-goal">
       <h3>Our Goal</h3>
       <p>
-        Our mission is to make reading fun and accessible to everyone.  
-        We believe in the power of books to inspire, educate, and connect people.  
+        At Miss Books, our goal is to build a vibrant community where readers
+        can share ideas, discover new perspectives, and celebrate the joy of
+        reading together. We aim to encourage curiosity, support lifelong
+        learning, and make literature accessible to everyone.
       </p>
     </section>
   )
