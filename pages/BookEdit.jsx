@@ -67,32 +67,90 @@ export function BookEdit() {
       <h2>{bookForm.id ? 'Edit Book' : 'Add Book'}</h2>
 
       <form onSubmit={onSave}>
-        <label htmlFor="title">Title</label>
-        <input
-          id="title"
-          name="title"
-          type="text"
-          value={bookForm.title || ''}
-          onChange={handleChange}
-          required
-        />
+  <label htmlFor="title">Title</label>
+  <input
+    id="title"
+    name="title"
+    type="text"
+    value={bookForm.title || ''}
+    onChange={handleChange}
+    required
+  />
 
-        <label htmlFor="amount">Price</label>
-        <input
-          id="amount"
-          name="amount"
-          type="number"
-          min="0"
-          value={(bookForm.listPrice && bookForm.listPrice.amount) || 0}
-          onChange={handleChange}
-          required
-        />
+  <label htmlFor="authors">Authors</label>
+  <input
+    id="authors"
+    name="authors"
+    type="text"
+    value={(bookForm.authors && bookForm.authors.join(', ')) || ''}
+    onChange={ev => {
+      const value = ev.target.value
+      setBookForm(prev => ({ ...prev, authors: value.split(',').map(a => a.trim()) }))
+    }}
+  />
 
-        <div className="actions">
-          <button type="submit">{bookForm.id ? 'Update' : 'Save'}</button>
-          <button type="button" onClick={() => navigate('/book')}>Cancel</button>
-        </div>
-      </form>
+  <label htmlFor="amount">Price</label>
+  <input
+    id="amount"
+    name="amount"
+    type="number"
+    min="0"
+    value={(bookForm.listPrice && bookForm.listPrice.amount) || 0}
+    onChange={handleChange}
+    required
+  />
+
+  <label htmlFor="description">Description</label>
+  <textarea
+    id="description"
+    name="description"
+    value={bookForm.description || ''}
+    onChange={handleChange}
+  />
+
+  <label htmlFor="pageCount">Number of pages</label>
+  <input
+    id="pageCount"
+    name="pageCount"
+    type="number"
+    min="0"
+    value={bookForm.pageCount || 0}
+    onChange={handleChange}
+  />
+
+  <label htmlFor="publishedDate">Published Date</label>
+  <input
+    id="publishedDate"
+    name="publishedDate"
+    type="number"
+    min="0"
+    value={bookForm.publishedDate || ''}
+    onChange={handleChange}
+  />
+
+ <div className="checkbox-field">
+  <input
+    type="checkbox"
+    id="isOnSale"
+    name="isOnSale"
+    checked={(bookForm.listPrice && bookForm.listPrice.isOnSale) || false}
+    onChange={ev =>
+      setBookForm(prev => ({
+        ...prev,
+        listPrice: { ...prev.listPrice, isOnSale: ev.target.checked },
+      }))
+    }
+  />
+  <label htmlFor="isOnSale">On Sale</label>
+</div>
+
+
+  <div className="actions">
+    <button type="submit">{bookForm.id ? 'Update' : 'Save'}</button>
+    <button type="button" onClick={() => navigate('/book')}>Cancel</button>
+  </div>
+</form>
+
     </section>
   )
 }
