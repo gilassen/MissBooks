@@ -3,12 +3,12 @@ import { DynamicRating } from './DynamicRating.jsx'
 
 export function BookRater({ value = 1, onChange }) {
   const [mode, setMode] = useState('select') 
-  const [val, setVal] = useState(+value || 1)
+  const [rating, setRating] = useState(+value || 1)
 
   function handleSelected(newVal) {
-    const v = +newVal || 0
-    setVal(v)
-    if (onChange) onChange(v)
+    const newRating = +newVal || 0
+    setRating(newRating)
+    if (onChange) onChange(newRating)
   }
 
   return (
@@ -50,7 +50,7 @@ export function BookRater({ value = 1, onChange }) {
         </label>
       </div>
 
-      <DynamicRating type={mode} val={val} onSelected={handleSelected} />
+      <DynamicRating type={mode} val={rating} onSelected={handleSelected} />
     </div>
   )
 }

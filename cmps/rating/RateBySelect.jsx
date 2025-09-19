@@ -4,8 +4,8 @@ export function RateBySelect({ val = 1, onSelected }) {
   const id = (typeof useId === 'function' ? useId() : 'rate-select')
 
   function handleChange({ target }) {
-    const v = target.value === '' ? '' : +target.value
-    if (onSelected) onSelected(v)
+    const newRating = target.value === '' ? '' : +target.value
+    if (onSelected) onSelected(newRating)
   }
 
   return (

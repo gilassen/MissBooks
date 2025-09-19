@@ -1,7 +1,7 @@
 export function RateByTextbox({ val = '', onSelected }) {
   function handleChange({ target }) {
-    const v = target.value
-    if (onSelected) onSelected(v === '' ? '' : +v)
+    const inputValue = target.value
+    if (onSelected) onSelected(inputValue === '' ? '' : +inputValue)
   }
 
   return (
