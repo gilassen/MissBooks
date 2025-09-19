@@ -71,7 +71,7 @@ export function BookIndex() {
 
         <button
           className="btn-add-google"
-          onClick={() => navigate('/book/add')}
+          onClick={() => navigate('/book/googleAdd')}
           title="Search & add from Google Books"
         >
           Add from Google

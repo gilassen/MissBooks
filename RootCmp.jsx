@@ -5,7 +5,7 @@ import { BookIndex }   from "./pages/BookIndex.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
 import { BookEdit }    from "./pages/BookEdit.jsx"
 import { UserMsg }     from "./cmps/UserMsg.jsx" 
-import { BookAdd } from './pages/BookAdd.jsx'
+import { BookGoogleAdd } from './pages/BookGoogleAdd.jsx'
 import { AboutTeam } from './cmps/AboutCmps/AboutTeam.jsx'
 import { AboutGoal } from './cmps/AboutCmps/AboutGoal.jsx'
 import { AppLoader } from "./cmps/AppLoader.jsx"
@@ -33,7 +33,7 @@ export function RootCmp() {
             <Route path="/book/:bookId" element={<BookDetails />} />
             <Route path="/book/edit/:bookId" element={<BookEdit />} />
             <Route path="*" element={<h2>Not found</h2>} />
-            <Route path="/book/add" element={<BookAdd />} />
+            <Route path="/book/googleAdd" element={<BookGoogleAdd />} />
             <Route path="/dashboard" element={<BookDashboard />} />
           </Routes>
         </main>

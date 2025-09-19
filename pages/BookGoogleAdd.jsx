@@ -4,7 +4,7 @@ import { bookService } from '../services/book.service.js'
 import { eventBusService, showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 const { useNavigate } = ReactRouterDOM
 
-export function BookAdd() {
+export function BookGoogleAdd() {
   const navigate = useNavigate()
   const [txt, setTxt] = useState('')
   const [results, setResults] = useState([])
